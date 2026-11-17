@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ntk-protocol"
+version = "0.1.0"
+description = "Need-to-Know (NTK): the output-side protocol for what an AI agent may say to other agents."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Federico De Ponte" }]
+keywords = ["agents", "llm", "privacy", "mcp", "agent-to-agent", "data-minimization",
+            "contextual-integrity", "ai-safety", "human-context-protocol", "dlp"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Security",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://federicodeponte.github.io/need-to-know/"
+Protocol = "https://federicodeponte.github.io/need-to-know/protocol/"
+Source = "https://github.com/federicodeponte/ntk-protocol"
+Spec = "https://github.com/federicodeponte/ntk-protocol/blob/main/SPEC.md"
+Changelog = "https://github.com/federicodeponte/ntk-protocol/blob/main/CHANGELOG.md"
+
+[project.scripts]
+ntk = "ntk.cli:main"
+ntk-mcp = "ntk.mcp_server:main"
+
+[tool.setuptools]
+packages = ["ntk"]
