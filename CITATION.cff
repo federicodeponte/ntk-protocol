@@ -1,18 +1,19 @@
 cff-version: 1.2.0
 message: "If you use the Need-to-Know protocol, please cite it as below."
-title: "Need-to-Know (NTK): an output-side protocol for what AI agents may say to other agents"
+title: "Need-to-Know (NTK): an output-side protocol for what agents may say to other agents"
 abstract: >-
-  The Need-to-Know (NTK) protocol specifies what an AI agent may say to other agents.
+  The Need-to-Know (NTK) protocol specifies what an agent may say to other agents.
   Each fact carries a label (public, role:<r>, private), each request carries
   requester, role and purpose, and each reply passes three checks: who is asking and why,
   use it but don't say it, and a hint check against inference. Replies are logged in a
   disclosure ledger and consent grants expire. NTK extends the Human Context Protocol (HCP)
-  with output-side rules.
+  with output-side rules. Reference implementations in Python and TypeScript share one
+  conformance suite.
 type: software
 authors:
   - family-names: "De Ponte"
     given-names: "Federico"
-version: "0.1.0"
+version: "0.2.0"
 date-released: "2026-11-16"
 license: Apache-2.0
 repository-code: "https://github.com/federicodeponte/ntk-protocol"
@@ -25,4 +26,39 @@ keywords:
   - data minimization
   - contextual integrity
   - model context protocol
-  - ai safety
+  - human context protocol
+references:
+  - type: article
+    title: "Robust AI Personalization Controls: The Human Context Protocol"
+    authors:
+      - family-names: "Shah"
+        given-names: "Anand"
+      - family-names: "South"
+        given-names: "Tobin"
+    year: 2025
+    url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5403981"
+    notes: "SSRN 5403981; further authors listed on SSRN."
+  - type: article
+    title: "Selective Memory for Artificial Intelligence: Write-Time Gating with Hierarchical Archiving"
+    authors:
+      - family-names: "Zahn"
+        given-names: "Oliver"
+      - family-names: "Chana"
+        given-names: "Simran"
+    year: 2026
+    identifiers:
+      - type: other
+        value: "arXiv:2603.15994"
+    url: "https://arxiv.org/abs/2603.15994"
+  - type: article
+    title: "Facts as First Class Objects: Knowledge Objects for Persistent LLM Memory"
+    authors:
+      - family-names: "Zahn"
+        given-names: "Oliver"
+      - family-names: "Chana"
+        given-names: "Simran"
+    year: 2026
+    identifiers:
+      - type: other
+        value: "arXiv:2603.17781"
+    url: "https://arxiv.org/abs/2603.17781"
