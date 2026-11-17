@@ -2,7 +2,7 @@
 
 > The Need-to-Know (NTK) protocol is an open, output-side protocol for what an AI agent may say to other agents. HCP decides what your agent can know; NTK decides what it can say. Each fact the agent knows carries one label (public, role:<r>, private); each request carries {requester, role, purpose}; each reply passes three checks before it is sent: (1) who is asking and why, (2) use it, don't say it, (3) hint check against inference. Every reply goes to a disclosure ledger, and consent grants expire.
 
-NTK extends the Human Context Protocol (HCP, SSRN), which governs access, with output-side rules. The HCP paper names "inference attacks" and "adversarial prompting, where malicious models attempt to elicit oversharing" as open risks; NTK checks 2 and 3 target them. The reference implementation is Python standard library only (3.9+), Apache-2.0, version 0.1.0, with a CLI (`ntk check`) and an MCP server (`ntk-mcp`, tool `check_reply`). The deterministic checks catch verbatim text, numbers, listed aliases and listed hints; an optional LLM judge runs through the local `claude -p` CLI. A 20-chat leak benchmark is planned and has not been run; there are no measured results yet.
+NTK extends the Human Context Protocol (HCP, SSRN), which governs access, with output-side rules. The HCP paper names "inference attacks" and "adversarial prompting, where malicious models attempt to elicit oversharing" as open risks; NTK checks 2 and 3 target them. Reference implementations: Python (standard library only, 3.9+) and TypeScript (npm package `ntk-protocol`, zero dependencies), Apache-2.0, version 0.2.0, each with a CLI (`ntk check`, `npx ntk-protocol check`) and an MCP server (`ntk-mcp`, `npx ntk-protocol mcp`, tool `check_reply`); a shared conformance suite keeps them identical. The deterministic checks catch verbatim text, numbers, listed aliases and listed hints; an optional LLM judge runs through the local `claude -p` CLI. A pre-registered pilot on the MAGPIE benchmark is underway; there are no measured results yet.
 
 ## Docs
 
@@ -16,6 +16,9 @@ NTK extends the Human Context Protocol (HCP, SSRN), which governs access, with o
 - [ntk/core.py](https://github.com/federicodeponte/ntk-protocol/blob/main/ntk/core.py): Fact, Label, Request, Policy, Grant, Ledger, check_reply
 - [ntk/mcp_server.py](https://github.com/federicodeponte/ntk-protocol/blob/main/ntk/mcp_server.py): ntk-mcp, a stdlib MCP server exposing check_reply and get_ledger
 - [ntk/cli.py](https://github.com/federicodeponte/ntk-protocol/blob/main/ntk/cli.py): `ntk check --facts facts.json --request request.json "draft"`
+- [js/src/core.ts](https://github.com/federicodeponte/ntk-protocol/blob/main/js/src/core.ts): the TypeScript port
+- [conformance/cases.json](https://github.com/federicodeponte/ntk-protocol/blob/main/conformance/cases.json): cross-implementation conformance cases
+- [paper/ntk.md](https://github.com/federicodeponte/ntk-protocol/blob/main/paper/ntk.md): technical report draft
 - [examples/maya_jun.py](https://github.com/federicodeponte/ntk-protocol/blob/main/examples/maya_jun.py): Maya's agent (unpublished result 0.81, IRB-restricted patient cohort) answers her collaborator Jun's agent
 
 ## Optional

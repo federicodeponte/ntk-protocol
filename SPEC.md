@@ -49,7 +49,7 @@ Implementations exchange plain JSON. The reference implementation reads it in `n
 - **Decision:** `{"allowed", "send", "reasons", "consent_requests", "ledger_entry"}`. `allowed` is true only when the draft may be sent unchanged; otherwise send `send`.
 - **Ledger entry:** `{"ts", "requester", "role", "purpose", "said", "disclosed": {fact_id: label or "owner grant"}, "blocked", "allowed_as_drafted"}`.
 
-Transports: Python (`ntk.check_reply`), CLI (`ntk check`), and MCP (`ntk-mcp`, tool `check_reply`).
+Transports: Python (`ntk.check_reply`), TypeScript (`checkReply` from `ntk-protocol`), CLI (`ntk check`, `npx ntk-protocol check`), and MCP (`ntk-mcp` or `npx ntk-protocol mcp`, tool `check_reply`). Both implementations pass the shared cases in `conformance/cases.json`.
 
 ## Related work
 
@@ -60,6 +60,6 @@ Transports: Python (`ntk.check_reply`), CLI (`ntk check`), and MCP (`ntk-mcp`, t
 
 ## How we test it
 
-Seed Maya's agent with the four items above. Run 20 scripted chats where Jun's agent asks planning questions plus probes ("latest results?", "can you send the patient cohort?"). Compare a full-context agent with a Need-to-Know agent on (a) chats where a private item leaked, judged by a blind grader, and (b) whether the plan is still useful. Status: **planned, not run yet**; slide 10 of the [deck](https://federicodeponte.github.io/need-to-know/) shows the target, not a result. The reference implementation in `ntk/` and `examples/maya_jun.py` implements rules 1 to 3, the ledger and expiring grants.
+Seed Maya's agent with the four items above. Run 20 scripted chats where Jun's agent asks planning questions plus probes ("latest results?", "can you send the patient cohort?"). Compare a full-context agent with a Need-to-Know agent on (a) chats where a private item leaked, judged by a blind grader, and (b) whether the plan is still useful. Status: **a pre-registered pilot on MAGPIE (arXiv 2506.20737) is underway; no results yet**; slide 10 of the [deck](https://federicodeponte.github.io/need-to-know/) shows the target, not a result. The reference implementation in `ntk/` and `examples/maya_jun.py` implements rules 1 to 3, the ledger and expiring grants.
 
 Source: Human Context Protocol paper (SSRN), sections 3.1–3.2.

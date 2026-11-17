@@ -5,4 +5,4 @@ from .core import (CANT_SHARE, ConsentRequest, Decision, Fact, Grant, Label, Led
 
 __all__ = ["CANT_SHARE", "ConsentRequest", "Decision", "Fact", "Grant", "Label", "Ledger",
            "LedgerEntry", "Policy", "Request", "check_reply"]
-__version__ = "0.1.0"
+__version__ = "0.2.0"
