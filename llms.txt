@@ -1,0 +1,24 @@
+# Need-to-Know (NTK) protocol
+
+> The Need-to-Know (NTK) protocol is an open, output-side protocol for what an AI agent may say to other agents. HCP decides what your agent can know; NTK decides what it can say. Each fact the agent knows carries one label (public, role:<r>, private); each request carries {requester, role, purpose}; each reply passes three checks before it is sent: (1) who is asking and why, (2) use it, don't say it, (3) hint check against inference. Every reply goes to a disclosure ledger, and consent grants expire.
+
+NTK extends the Human Context Protocol (HCP, SSRN), which governs access, with output-side rules. The HCP paper names "inference attacks" and "adversarial prompting, where malicious models attempt to elicit oversharing" as open risks; NTK checks 2 and 3 target them. The reference implementation is Python standard library only (3.9+), Apache-2.0, version 0.1.0, with a CLI (`ntk check`) and an MCP server (`ntk-mcp`, tool `check_reply`). The deterministic checks catch verbatim text, numbers, listed aliases and listed hints; an optional LLM judge runs through the local `claude -p` CLI. A 20-chat leak benchmark is planned and has not been run; there are no measured results yet.
+
+## Docs
+
+- [README](https://github.com/federicodeponte/ntk-protocol/blob/main/README.md): definition, quickstart, MCP setup, comparison with HCP, write-time gating, Knowledge Objects, contextual integrity and DLP, limitations, FAQ
+- [SPEC.md](https://github.com/federicodeponte/ntk-protocol/blob/main/SPEC.md): labels, the three rules, ledger, grants, wire format, related work
+- [Protocol page](https://federicodeponte.github.io/need-to-know/protocol/): the protocol on one page
+- [Deck](https://federicodeponte.github.io/need-to-know/): the pitch and the worked example
+
+## Code
+
+- [ntk/core.py](https://github.com/federicodeponte/ntk-protocol/blob/main/ntk/core.py): Fact, Label, Request, Policy, Grant, Ledger, check_reply
+- [ntk/mcp_server.py](https://github.com/federicodeponte/ntk-protocol/blob/main/ntk/mcp_server.py): ntk-mcp, a stdlib MCP server exposing check_reply and get_ledger
+- [ntk/cli.py](https://github.com/federicodeponte/ntk-protocol/blob/main/ntk/cli.py): `ntk check --facts facts.json --request request.json "draft"`
+- [examples/maya_jun.py](https://github.com/federicodeponte/ntk-protocol/blob/main/examples/maya_jun.py): Maya's agent (unpublished result 0.81, IRB-restricted patient cohort) answers her collaborator Jun's agent
+
+## Optional
+
+- [CHANGELOG.md](https://github.com/federicodeponte/ntk-protocol/blob/main/CHANGELOG.md)
+- [CITATION.cff](https://github.com/federicodeponte/ntk-protocol/blob/main/CITATION.cff)

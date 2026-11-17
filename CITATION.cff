@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use the Need-to-Know protocol, please cite it as below."
+title: "Need-to-Know (NTK): an output-side protocol for what AI agents may say to other agents"
+abstract: >-
+  The Need-to-Know (NTK) protocol specifies what an AI agent may say to other agents.
+  Each fact carries a label (public, role:<r>, private), each request carries
+  requester, role and purpose, and each reply passes three checks: who is asking and why,
+  use it but don't say it, and a hint check against inference. Replies are logged in a
+  disclosure ledger and consent grants expire. NTK extends the Human Context Protocol (HCP)
+  with output-side rules.
+type: software
+authors:
+  - family-names: "De Ponte"
+    given-names: "Federico"
+version: "0.1.0"
+date-released: "2026-11-16"
+license: Apache-2.0
+repository-code: "https://github.com/federicodeponte/ntk-protocol"
+url: "https://federicodeponte.github.io/need-to-know/"
+keywords:
+  - agents
+  - llm
+  - privacy
+  - agent-to-agent
+  - data minimization
+  - contextual integrity
+  - model context protocol
+  - ai safety
