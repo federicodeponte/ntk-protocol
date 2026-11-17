@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>NTK hero</title>
+<!-- Source for assets/hero.png (1760x880) and assets/hero@2x.png. Render: python3 assets/src/render.py
+     Style follows the deck (federicodeponte.github.io/need-to-know): dithered ASCII sky,
+     Instrument Serif headlines, IBM Plex Mono labels, one red square as the secret. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{--ink:#14161B;--dim:#5F6672;--red:#FF4B33;--redsoft:#FFE3DE;--ok:#15803D;
+  --serif:"Instrument Serif",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--sans:"Geist","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html,body{width:1760px;height:880px;overflow:hidden;background:#1B3BB5}
+.s{position:relative;width:1760px;height:880px;color:#fff;font-family:var(--sans)}
+canvas{position:absolute;inset:0}
+.s::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,18,70,.45),rgba(8,18,70,.05) 45%,rgba(8,18,70,.35));pointer-events:none}
+.z{position:absolute;z-index:2}
+.sh{text-shadow:0 1px 2px rgba(5,12,50,.35),0 0 22px rgba(5,12,50,.35)}
+.corner{font-family:var(--mono);font-size:19px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.tl{top:44px;left:72px;display:flex;align-items:center;gap:16px}
+.tl svg{width:40px;height:40px}
+.tr{top:52px;right:72px;opacity:.9}
+h1{position:absolute;z-index:2;left:72px;top:112px;font-family:var(--serif);font-weight:400;font-size:84px;line-height:1;letter-spacing:-.01em}
+h1 em{font-style:italic}
+.sub{left:74px;top:214px;font-size:26px;font-weight:600;opacity:.95;max-width:1100px}
+.glass{background:rgba(255,255,255,.9);color:var(--ink);border:1px solid rgba(255,255,255,.95)}
+.row{left:72px;right:72px;top:300px;height:440px;display:grid;grid-template-columns:330px 56px 1fr 56px 400px;align-items:center}
+.who{display:flex;flex-direction:column;gap:18px}
+.who.r{align-items:flex-end}
+.id{display:flex;align-items:center;gap:16px}
+.who.r .id{flex-direction:row-reverse}
+.ava{width:92px;height:92px;border-radius:50%;overflow:hidden;border:5px solid #fff;flex:none;background:#fff}
+.ava svg{width:100%;height:100%;display:block}
+.lab{font-family:var(--mono);font-size:17px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.bub{background:#fff;color:var(--ink);border-radius:26px;border-bottom-left-radius:6px;padding:20px 24px;font-size:27px;font-weight:600;line-height:1.25}
+.bub.out{background:var(--ink);color:#fff;border-bottom-left-radius:26px;border-bottom-right-radius:6px}
+.req{font-family:var(--mono);font-size:16px;line-height:1.55;opacity:.92}
+.arr{display:grid;place-items:center;font-size:44px;font-weight:300}
+.checks{display:flex;flex-direction:column;gap:16px}
+.q{display:grid;grid-template-columns:52px 1fr;column-gap:18px;row-gap:4px;align-items:center;border-radius:22px;padding:18px 24px}
+.qn{grid-row:span 2;width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:22px}
+.qq{font-family:var(--serif);font-size:38px;line-height:1.02}
+.qa{font-size:21px;font-weight:600;color:var(--dim)}
+.qa.no{color:var(--red)}.qa.ok{color:var(--ok)}
+.qa s{color:var(--red);text-decoration-thickness:2px}
+.home{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:16px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.home i{width:34px;height:34px;background:var(--red);border-radius:4px;box-shadow:0 0 0 6px rgba(255,75,51,.35);flex:none}
+.slot{left:72px;right:72px;bottom:40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.slot .bench{display:flex;align-items:center;gap:16px;border:2px dashed rgba(255,255,255,.75);border-radius:99px;padding:12px 26px;font-family:var(--mono);font-size:18px;letter-spacing:.06em}
+.slot .bench b{font-weight:600;text-transform:uppercase;letter-spacing:.12em}
+.slot .url{font-family:var(--mono);font-size:18px;letter-spacing:.06em;opacity:.95}
+</style></head>
+<body>
+<div class="s" data-seed="47">
+  <canvas></canvas>
+  <div class="z corner tl sh"><svg viewBox="0 0 64 64"><path d="M14 8h36a8 8 0 0 1 8 8v24a8 8 0 0 1-8 8H30l-12 10v-10h-4a8 8 0 0 1-8-8V16a8 8 0 0 1 8-8z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/><rect x="23" y="19" width="18" height="18" rx="1.5" fill="#FF4B33"/></svg>Need-to-Know protocol</div>
+  <div class="z corner tr sh">Python · TypeScript · MCP</div>
+  <h1 class="sh">HCP decides what your agent can know.<br><em>NTK decides what it can say.</em></h1>
+
+  <div class="z row" style="top:318px">
+    <div class="who">
+      <div class="id"><span class="ava" data-avatar="jun"></span><span class="lab sh">Jun's agent asks</span></div>
+      <div class="bub">What are Maya's latest results?</div>
+      <div class="req sh">requester: jun-agent<br>role: collaborator<br>purpose: plan a study</div>
+    </div>
+    <div class="arr sh">&rarr;</div>
+    <div class="checks">
+      <div class="q glass"><span class="qn">1</span><span class="qq">Who's asking, and why?</span><span class="qa no">The new result is private. Not for Jun.</span></div>
+      <div class="q glass"><span class="qn">2</span><span class="qq">Use it, don't say it.</span><span class="qa ok">Still help: point him to the new dataset.</span></div>
+      <div class="q glass"><span class="qn">3</span><span class="qq">Does the reply give it away?</span><span class="qa"><s>"She beat the baseline."</s> Rewrite.</span></div>
+    </div>
+    <div class="arr sh">&rarr;</div>
+    <div class="who r">
+      <div class="id"><span class="ava" data-avatar="maya"></span><span class="lab sh">Maya's agent replies</span></div>
+      <div class="bub out">Start on the new dataset. Results come after publication.</div>
+      <div class="home sh"><i></i>The secret stays home</div>
+    </div>
+  </div>
+
+  <div class="z slot">
+    <!-- Benchmark slot: replace this pill with measured numbers once the pre-registered pilot reports. -->
+    <div class="bench sh"><b>Benchmark</b>MAGPIE pilot underway · results posted with pre-registration</div>
+    <div class="url sh">github.com/federicodeponte/ntk-protocol</div>
+  </div>
+</div>
+<script>
+(function(){
+  function hash(x,y,s){var h=(x*374761393+y*668265263+s*1442695041)|0;h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return (h>>>0)/4294967295;}
+  function sm(t){return t*t*(3-2*t);}
+  function vnoise(x,y,s){var xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi;
+    var a=hash(xi,yi,s),b=hash(xi+1,yi,s),c=hash(xi,yi+1,s),d=hash(xi+1,yi+1,s),u=sm(xf),v=sm(yf);
+    return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v;}
+  function fbm(x,y,s){var t=0,amp=.55,f=1;for(var i=0;i<4;i++){t+=amp*vnoise(x*f,y*f,s+i*7);f*=2.03;amp*=.5;}return t;}
+  var CH=" .:-=+*#%@";
+  function draw(slide){
+    var cv=slide.querySelector('canvas'),w=slide.clientWidth,h=slide.clientHeight,dpr=window.devicePixelRatio||1;
+    cv.width=w*dpr;cv.height=h*dpr;cv.style.width=w+'px';cv.style.height=h+'px';var c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);
+    var g=c.createLinearGradient(0,0,0,h);g.addColorStop(0,'#1B3BB5');g.addColorStop(1,'#3E6CE0');c.fillStyle=g;c.fillRect(0,0,w,h);
+    var seed=+slide.dataset.seed||1,cell=w/150;
+    c.font=Math.round(cell*1.15)+'px "IBM Plex Mono", monospace';c.textBaseline='top';
+    var cols=Math.ceil(w/cell),rows=Math.ceil(h/cell);
+    for(var y=0;y<rows;y++){for(var x=0;x<cols;x++){
+      var px=x*cell,py=y*cell,n=fbm(px/w*3.2+seed,py/h*2.1+seed*.3,seed);
+      var v=(n-.42)/.32;if(v<=0)continue;if(v>1)v=1;
+      c.fillStyle='rgba(255,255,255,'+(.10+.42*v).toFixed(2)+')';c.fillText(CH[1+Math.floor(v*(CH.length-2))],px,py);
+    }}
+  }
+  var A={
+maya:'<svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#FFB547"/><path d="M14 64c0-14 8-22 18-22s18 8 18 22z" fill="#14161B"/><path d="M15 40c-2-18 5-28 17-28s19 10 17 28c-3-6-4-12-4-16-6 4-18 4-26 0 0 4-1 10-4 16z" fill="#3A2318"/><circle cx="32" cy="31" r="11" fill="#E9B08A"/><path d="M21 28c3-8 19-9 22 0-5-3-15-4-22 0z" fill="#3A2318"/><circle cx="28" cy="31" r="1.3" fill="#14161B"/><circle cx="36" cy="31" r="1.3" fill="#14161B"/><path d="M29 36q3 2 6 0" stroke="#14161B" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>',
+jun:'<svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#5ED1B5"/><path d="M14 64c0-14 8-22 18-22s18 8 18 22z" fill="#FF4B33"/><circle cx="32" cy="31" r="11" fill="#F1C9A0"/><path d="M20 29c0-10 6-14 12-14s13 4 12 14c-3-5-8-7-12-7s-9 2-12 7z" fill="#14161B"/><circle cx="27.5" cy="31.5" r="3.3" fill="none" stroke="#14161B" stroke-width="1.4"/><circle cx="36.5" cy="31.5" r="3.3" fill="none" stroke="#14161B" stroke-width="1.4"/><path d="M30.8 31.5h2.4" stroke="#14161B" stroke-width="1.4"/><circle cx="27.5" cy="31.5" r="1" fill="#14161B"/><circle cx="36.5" cy="31.5" r="1" fill="#14161B"/><path d="M29.5 37q2.5 1.6 5 0" stroke="#14161B" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>'};
+  document.querySelectorAll('[data-avatar]').forEach(function(e){e.innerHTML=A[e.dataset.avatar]||'';});
+  document.fonts.ready.then(function(){draw(document.querySelector('.s'));document.body.dataset.ready='1';});
+})();
+</script>
+</body></html>
