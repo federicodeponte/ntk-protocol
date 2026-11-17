@@ -1,7 +1,7 @@
 // Mirrors tests/test_ntk.py.
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
-import { CANT_SHARE, Label, Ledger, checkReply, claudeJudge, defaultJudge } from "../dist/index.js";
+import { CANT_SHARE, Fact, Label, Ledger, checkReply, claudeJudge, defaultJudge } from "../dist/index.js";
 import { judgeEnv } from "../dist/judge.js";
 import { mayaFacts, mayaPolicy } from "./helpers.mjs";
 
@@ -69,6 +69,14 @@ describe("check 2: use it, don't say it", () => {
     assert.ok(!d.rewritten.includes("0.81"));
     assert.match(d.reasons[0], /check2/);
   });
+  test("bare years and small numbers do not say a fact", () => {
+    const req = { requester: "x", role: "stranger", purpose: "chat" };
+    const f = new Fact({ id: "lunch", text: "Lunch with the recruiter on 03.02.2022 about a 20 hour role", label: "private" });
+    assert.equal(checkReply("Our 2022 report covers 20 teams.", [f], req, { judge: null }).allowed, true);
+    const g = new Fact({ id: "fee", text: "The fee was $20k", label: "private" });
+    assert.equal(checkReply("They paid $20k.", [g], req, { judge: null }).allowed, false);
+  });
+
   test("number boundaries", () => {
     assert.ok(run("Plan for 81 participants over 18 weeks.").allowed);
     assert.ok(!run("We saw 0.81, roughly.").allowed);

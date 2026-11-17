@@ -63,6 +63,14 @@ function escapeRegExp(s: string): string {
 
 type Num = [cur: string, value: string, unit: string];
 
+/** A fact number distinctive enough to count as saying the fact: a currency or unit, a decimal,
+ *  or 3+ digits that are not a bare year. "2022" or "20" alone match too much ordinary text. */
+function specific(n: Num): boolean {
+  const [cur, num, unit] = n;
+  if (cur || unit || num.includes(".")) return true;
+  return num.length >= 3 && !/^(19|20)\d\d$/.test(num);
+}
+
 /** Numbers as [currency, value, unit], so '$10m' is not '10' and '10:30' is a time, not two numbers. */
 function numbers(text: string): Num[] {
   const out = new Map<string, Num>();
@@ -142,7 +150,7 @@ export class Fact {
   numbers(): Num[] {
     const out = numbers(this.text);
     for (const a of this.aliases) out.push(...numbers(a));
-    return out;
+    return out.filter(specific);
   }
 
   /** Why `text` says this fact outright, or null. */

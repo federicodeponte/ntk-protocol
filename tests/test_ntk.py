@@ -87,6 +87,23 @@ class TestCheck2UseDontSay(unittest.TestCase):
         self.assertTrue(run("Plan for 81 participants over 18 weeks.").allowed)
         self.assertFalse(run("We saw 0.81, roughly.").allowed)
 
+    def test_bare_years_and_small_numbers_do_not_say_a_fact(self):
+        from ntk import Fact
+        f = Fact(id="lunch", text="Lunch with the recruiter on 03.02.2022 about a 20 hour role", label="private")
+        req = Request("x", "stranger", "chat")
+        self.assertTrue(check_reply("Our 2022 report covers 20 teams.", [f], req, judge=None).allowed)
+        g = Fact(id="fee", text="The fee was $20k", label="private")
+        self.assertFalse(check_reply("They paid $20k.", [g], req, judge=None).allowed)
+
+    def test_contradiction_needs_a_thread(self):
+        from ntk import Fact
+        f = Fact(id="s", text="secret plan", label="private")
+        out = '{"leak": true, "kind": "contradiction", "fact_id": "", "why": "conflicts"}'
+        with mock.patch.object(judge_mod.shutil, "which", return_value="/bin/claude"), \
+                mock.patch.object(judge_mod.subprocess, "run", return_value=mock.Mock(stdout=out)):
+            self.assertIsNone(judge_mod.claude_judge("hi", [f], Request("x", "stranger", "chat"), []))
+            self.assertIsNotNone(judge_mod.claude_judge("hi", [f], Request("x", "stranger", "chat"), ["earlier"]))
+
     def test_paraphrase_alias(self):
         d = run("I can send the patient cohort file.")
         self.assertFalse(d.allowed)

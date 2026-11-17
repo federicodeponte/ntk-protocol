@@ -68,6 +68,15 @@ def _numbers(text: str) -> set[tuple[str, str, str]]:
     return out
 
 
+def _specific(n: tuple[str, str, str]) -> bool:
+    """A fact number distinctive enough to count as *saying* the fact: a currency or unit, a decimal,
+    or 3+ digits that are not a bare year. '2022' or '20' alone match too much ordinary text."""
+    cur, num, unit = n
+    if cur or unit or "." in num:
+        return True
+    return len(num) >= 3 and not re.fullmatch(r"(19|20)\d\d", num)
+
+
 def _num_match(a: tuple[str, str, str], b: tuple[str, str, str]) -> bool:
     """Same value; currencies agree when both are given; units agree, unless one side omits the
     unit and the value is specific (has a decimal or 3+ digits): '4.2' still says '4.2m', '10' does not say '$10m'."""
@@ -113,7 +122,7 @@ class Fact:
         out = _numbers(self.text)
         for a in self.aliases:
             out |= _numbers(a)
-        return out
+        return {n for n in out if _specific(n)}
 
     def said_in(self, text: str) -> Optional[str]:
         """Return why `text` says this fact outright, or None."""

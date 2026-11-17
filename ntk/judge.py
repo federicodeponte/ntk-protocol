@@ -61,6 +61,8 @@ def claude_judge(reply, facts, request, thread, timeout: int = 90) -> Optional[s
         return None
     if verdict.get("leak"):
         kind = verdict.get("kind") or "secret"
+        if kind == "contradiction" and not thread:
+            return None  # nothing earlier in the thread to contradict
         return f"{kind} '{verdict.get('fact_id', '?')}' {verdict.get('why', '')}".strip()
     return None
 

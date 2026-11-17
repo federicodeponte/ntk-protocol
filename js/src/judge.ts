@@ -56,6 +56,7 @@ export const claudeJudge: Judge = (reply, facts, request, thread) => {
     const line = p.stdout.split("\n").reverse().find((l) => l.trim().startsWith("{"));
     if (!line) return null;
     const v = JSON.parse(line);
+    if (v.leak && v.kind === "contradiction" && !(thread && thread.length)) return null; // nothing earlier to contradict
     if (v.leak) return `${v.kind ?? "secret"} '${v.fact_id ?? "?"}' ${v.why ?? ""}`.trim();
   } catch {
     return null;
