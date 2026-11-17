@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-labelledby="t d">
+  <title id="t">Need-to-Know message flow</title>
+  <desc id="d">Jun's agent sends a request with requester, role and purpose to Maya's agent. Maya's agent runs three checks on its draft reply: who is asking and why, use it don't say it, and the hint check. The checked reply goes back to Jun's agent and every reply is written to the disclosure ledger.</desc>
+  <style>
+    .serif { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; }
+    .mono  { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
+    .sans  { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  </style>
+  <defs>
+    <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <rect width="12" height="12" fill="#3D6FE3"/>
+      <rect x="0" y="0" width="2" height="2" fill="#6F93EC"/>
+      <rect x="6" y="6" width="2" height="2" fill="#2F5BC9"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/>
+    </marker>
+  </defs>
+
+  <!-- the sky: an opaque panel, so the diagram reads the same in light and dark mode -->
+  <rect x="0" y="0" width="960" height="420" rx="18" fill="url(#dots)"/>
+
+  <text x="40" y="58" class="serif" font-size="34" fill="#FFFFFF">HCP decides what your agent can know.</text>
+  <text x="40" y="96" class="serif" font-size="34" fill="#FFFFFF" font-style="italic">NTK decides what it can say.</text>
+
+  <!-- Jun's agent -->
+  <rect x="40" y="150" width="210" height="190" rx="14" fill="#FFFFFF"/>
+  <text x="145" y="186" text-anchor="middle" class="sans" font-size="18" font-weight="700" fill="#14161B">Jun's agent</text>
+  <text x="145" y="210" text-anchor="middle" class="sans" font-size="13" fill="#5F6672">the requester</text>
+  <text x="60" y="250" class="mono" font-size="12" fill="#14161B">requester: jun-agent</text>
+  <text x="60" y="270" class="mono" font-size="12" fill="#14161B">role: collaborator</text>
+  <text x="60" y="290" class="mono" font-size="12" fill="#14161B">purpose: plan a study</text>
+
+  <!-- arrows -->
+  <line x1="256" y1="200" x2="400" y2="200" stroke="#FFFFFF" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="328" y="188" text-anchor="middle" class="mono" font-size="12" fill="#FFFFFF">request</text>
+  <line x1="400" y1="300" x2="256" y2="300" stroke="#FFFFFF" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="328" y="324" text-anchor="middle" class="mono" font-size="12" fill="#FFFFFF">checked reply</text>
+
+  <!-- Maya's agent with the three checks -->
+  <rect x="406" y="130" width="330" height="250" rx="14" fill="#FFFFFF"/>
+  <text x="430" y="164" class="sans" font-size="18" font-weight="700" fill="#14161B">Maya's agent</text>
+  <text x="430" y="186" class="sans" font-size="13" fill="#5F6672">draft reply passes three checks</text>
+
+  <rect x="426" y="202" width="290" height="44" rx="8" fill="#E9EDF6"/>
+  <text x="442" y="229" class="sans" font-size="14" fill="#14161B"><tspan font-weight="700">1</tspan>  Who's asking, and why</text>
+  <rect x="426" y="254" width="290" height="44" rx="8" fill="#E9EDF6"/>
+  <text x="442" y="281" class="sans" font-size="14" fill="#14161B"><tspan font-weight="700">2</tspan>  Use it, don't say it</text>
+  <rect x="426" y="306" width="290" height="44" rx="8" fill="#E9EDF6"/>
+  <text x="442" y="333" class="sans" font-size="14" fill="#14161B"><tspan font-weight="700">3</tspan>  Hint check</text>
+
+  <!-- labels and the private fact (red square) -->
+  <rect x="760" y="130" width="160" height="160" rx="14" fill="#FFFFFF"/>
+  <text x="776" y="160" class="sans" font-size="13" font-weight="700" fill="#14161B">Labels per fact</text>
+  <rect x="776" y="176" width="12" height="12" fill="#3D6FE3"/>
+  <text x="796" y="187" class="mono" font-size="12" fill="#14161B">public</text>
+  <rect x="776" y="204" width="12" height="12" fill="#14161B"/>
+  <text x="796" y="215" class="mono" font-size="12" fill="#14161B">role:&lt;r&gt;</text>
+  <rect x="776" y="232" width="12" height="12" fill="#FF4B33"/>
+  <text x="796" y="243" class="mono" font-size="12" fill="#14161B">private</text>
+  <text x="776" y="272" class="sans" font-size="11" fill="#5F6672">0.81 steers, never speaks</text>
+
+  <rect x="760" y="306" width="160" height="74" rx="14" fill="#FFFFFF"/>
+  <text x="776" y="334" class="sans" font-size="13" font-weight="700" fill="#14161B">Disclosure ledger</text>
+  <text x="776" y="356" class="sans" font-size="11" fill="#5F6672">every reply logged;</text>
+  <text x="776" y="371" class="sans" font-size="11" fill="#5F6672">consent grants expire</text>
+  <line x1="736" y1="343" x2="756" y2="343" stroke="#FFFFFF" stroke-width="2.5" marker-end="url(#arrow)"/>
+</svg>
