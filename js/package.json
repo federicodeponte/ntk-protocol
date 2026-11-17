@@ -1,0 +1,29 @@
+{
+  "name": "ntk-protocol",
+  "version": "0.2.0",
+  "description": "Need-to-Know (NTK): the output-side protocol for what an agent may say to other agents. TypeScript port with CLI and MCP server.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./package.json": "./package.json"
+  },
+  "bin": { "ntk-protocol": "dist/cli.js" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": { "node": ">=18.17" },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && chmod +x dist/cli.js",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "keywords": ["agents", "agent-to-agent", "privacy", "mcp", "model-context-protocol",
+    "data-minimization", "contextual-integrity", "need-to-know", "human-context-protocol", "dlp"],
+  "author": "Federico De Ponte",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/federicodeponte/ntk-protocol#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/federicodeponte/ntk-protocol.git", "directory": "js" },
+  "bugs": "https://github.com/federicodeponte/ntk-protocol/issues",
+  "dependencies": {},
+  "devDependencies": { "typescript": "5.6.3", "@types/node": "20.17.6" }
+}
