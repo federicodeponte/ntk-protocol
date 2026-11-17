@@ -50,11 +50,34 @@ class Label:
 
 # ---------------------------------------------------------------- facts
 
-_NUM = re.compile(r"(?<![\w.])\d+(?:\.\d+)?(?!\d)")
+_NUM = re.compile(
+    r"(?<![\w.:,])([$€£]?)(\d+(?:[.,]\d+)*)(?![\d:])"
+    r"(?:\s?(k|thousand|m|mn|mio|million|bn|b|billion|%|pp|percent)(?!\w))?",
+    re.I,
+)
+_UNIT = {"thousand": "k", "mn": "m", "mio": "m", "million": "m", "bn": "b", "billion": "b", "percent": "%"}
 
 
-def _numbers(text: str) -> set[str]:
-    return {n for n in _NUM.findall(text) if "." in n or len(n) >= 2}
+def _numbers(text: str) -> set[tuple[str, str, str]]:
+    """Numbers as (currency, value, unit), so '$10m' is not '10' and '10:30' is a time, not two numbers."""
+    out = set()
+    for cur, num, unit in _NUM.findall(text):
+        unit = _UNIT.get(unit.lower(), unit.lower())
+        if cur or unit or "." in num or "," in num or len(num) >= 2:
+            out.add((cur, num.replace(",", "."), unit))
+    return out
+
+
+def _num_match(a: tuple[str, str, str], b: tuple[str, str, str]) -> bool:
+    """Same value; currencies agree when both are given; units agree, unless one side omits the
+    unit and the value is specific (has a decimal or 3+ digits): '4.2' still says '4.2m', '10' does not say '$10m'."""
+    if a[1] != b[1] or (a[0] and b[0] and a[0] != b[0]):
+        return False
+    if a[2] == b[2]:
+        return not (a[0] != b[0] and not a[2] and len(a[1]) < 3 and "." not in a[1])
+    if a[2] and b[2]:
+        return False
+    return "." in a[1] or len(a[1]) >= 3
 
 
 def _phrase_in(phrase: str, text: str) -> bool:
@@ -86,7 +109,7 @@ class Fact:
     def __post_init__(self) -> None:
         self.label = Label.parse(self.label)
 
-    def numbers(self) -> set[str]:
+    def numbers(self) -> set[tuple[str, str, str]]:
         out = _numbers(self.text)
         for a in self.aliases:
             out |= _numbers(a)
@@ -96,7 +119,8 @@ class Fact:
         """Return why `text` says this fact outright, or None."""
         if _phrase_in(self.text, text):
             return "verbatim"
-        nums = self.numbers() & _numbers(text)
+        said = _numbers(text)
+        nums = {f[1] for f in self.numbers() if any(_num_match(f, t) for t in said)}
         if nums:
             return "number " + ",".join(sorted(nums))
         for a in self.aliases:

@@ -620,6 +620,70 @@
         "consent_fact_ids": [],
         "disclosed": {}
       }
+    },
+    {
+      "facts": [
+        {
+          "id": "team",
+          "text": "team shrank from 10 to 2.5",
+          "label": "private"
+        },
+        {
+          "id": "users",
+          "text": "usage",
+          "label": "private",
+          "aliases": [
+            "1,383 calls in 30 days"
+          ]
+        }
+      ],
+      "request": {
+        "requester": "a",
+        "role": "investor",
+        "purpose": "raise"
+      },
+      "name": "numbers keep units: '$10m cap' is not '10', '10:30' is a time",
+      "draft": "We raise at a $10m cap, see you at 10:30.",
+      "expect": {
+        "allowed": true,
+        "send": "We raise at a $10m cap, see you at 10:30.",
+        "reasons": [],
+        "consent_fact_ids": [],
+        "disclosed": {}
+      }
+    },
+    {
+      "facts": [
+        {
+          "id": "team",
+          "text": "team shrank from 10 to 2.5",
+          "label": "private"
+        },
+        {
+          "id": "users",
+          "text": "usage",
+          "label": "private",
+          "aliases": [
+            "1,383 calls in 30 days"
+          ]
+        }
+      ],
+      "request": {
+        "requester": "a",
+        "role": "investor",
+        "purpose": "raise"
+      },
+      "name": "specific numbers still match across formats",
+      "draft": "He made 1.383 calls last month.",
+      "expect": {
+        "allowed": false,
+        "send": "I can't share that.",
+        "reasons": [
+          "check2 use-don't-say: 'users' (number 1.383)"
+        ],
+        "consent_fact_ids": [],
+        "disclosed": {}
+      }
     }
   ]
 }

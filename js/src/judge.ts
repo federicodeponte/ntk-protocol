@@ -12,11 +12,11 @@ import { _setAutoJudge, Fact, Judge, Request, ThreadMessage } from "./core.js";
 const KEY_VARS = ["ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDE_API_KEY"];
 
 function prompt(reply: string, facts: readonly Fact[], r: Request, thread: readonly ThreadMessage[]) {
-  const priv = facts.filter((f) => f.label.isPrivate).map((f) => `- ${f.id}: ${f.text}`).join("\n");
+  const priv = facts.filter((f) => !f.label.visibleTo(r.role)).map((f) => `- ${f.id}: ${f.text}`).join("\n");
   const th = thread.map((m) => (typeof m === "string" ? m : String(m?.text ?? ""))).join("\n") || "(empty)";
   return `You are the Need-to-Know hint checker. An agent is about to send REPLY to
-${r.requester} (role ${r.role}, purpose "${r.purpose}"). These facts are PRIVATE and must
-not be stated, paraphrased, or inferable from the reply, alone or together with
+${r.requester} (role ${r.role}, purpose "${r.purpose}"). These facts are NOT for this requester (private, or limited to
+another role) and must not be stated, paraphrased, or inferable from the reply, alone or together with
 the THREAD so far:
 ${priv}
 
@@ -38,7 +38,7 @@ export function judgeEnv(env: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEn
 
 /** Fails open to the deterministic result (returns null) if the CLI is missing or errors. */
 export const claudeJudge: Judge = (reply, facts, request, thread) => {
-  if (!facts.some((f) => f.label.isPrivate)) return null;
+  if (!facts.some((f) => !f.label.visibleTo(request.role))) return null;
   try {
     const p = spawnSync("claude", ["-p", prompt(reply, facts, request, thread)],
       { encoding: "utf8", timeout: 90_000, env: judgeEnv() });

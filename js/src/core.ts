@@ -49,20 +49,43 @@ export class Label {
 
 const W = "[\\p{L}\\p{N}_]";
 const D = "\\p{Nd}";
-const NUM = new RegExp(`(?<!${W.slice(0, -1)}.])${D}+(?:\\.${D}+)?(?!${D})`, "gu");
+const NUM = new RegExp(
+  `(?<!${W.slice(0, -1)}.:,])([$€£]?)(${D}+(?:[.,]${D}+)*)(?![${D.slice(0)}:])` +
+    `(?:\\s?(k|thousand|m|mn|mio|million|bn|b|billion|%|pp|percent)(?!${W}))?`,
+  "giu",
+);
+const UNIT: Record<string, string> = { thousand: "k", mn: "m", mio: "m", million: "m", bn: "b", billion: "b", percent: "%" };
 const SENT = /(?<=[.!?])\s+/u;
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function numbers(text: string): Set<string> {
-  const out = new Set<string>();
+type Num = [cur: string, value: string, unit: string];
+
+/** Numbers as [currency, value, unit], so '$10m' is not '10' and '10:30' is a time, not two numbers. */
+function numbers(text: string): Num[] {
+  const out = new Map<string, Num>();
   for (const m of text.matchAll(NUM)) {
-    const n = m[0];
-    if (n.includes(".") || n.length >= 2) out.add(n);
+    const cur = m[1] ?? "";
+    const num = m[2];
+    let unit = (m[3] ?? "").toLowerCase();
+    unit = UNIT[unit] ?? unit;
+    if (cur || unit || num.includes(".") || num.includes(",") || num.length >= 2) {
+      const n: Num = [cur, num.replace(/,/g, "."), unit];
+      out.set(n.join("\u0000"), n);
+    }
   }
-  return out;
+  return [...out.values()];
+}
+
+/** Same value; currencies agree when both given; units agree unless one side omits the unit and the value is specific. */
+function numMatch(a: Num, b: Num): boolean {
+  if (a[1] !== b[1] || (a[0] && b[0] && a[0] !== b[0])) return false;
+  const specific = a[1].includes(".") || a[1].length >= 3;
+  if (a[2] === b[2]) return !(a[0] !== b[0] && !a[2] && !specific);
+  if (a[2] && b[2]) return false;
+  return specific;
 }
 
 function phraseIn(phrase: string, text: string): boolean {
@@ -116,17 +139,17 @@ export class Fact {
     this.owner = init.owner ?? "owner";
   }
 
-  numbers(): Set<string> {
+  numbers(): Num[] {
     const out = numbers(this.text);
-    for (const a of this.aliases) for (const n of numbers(a)) out.add(n);
+    for (const a of this.aliases) out.push(...numbers(a));
     return out;
   }
 
   /** Why `text` says this fact outright, or null. */
   saidIn(text: string): string | null {
     if (phraseIn(this.text, text)) return "verbatim";
-    const inText = numbers(text);
-    const nums = [...this.numbers()].filter((n) => inText.has(n));
+    const said = numbers(text);
+    const nums = [...new Set(this.numbers().filter((f) => said.some((t) => numMatch(f, t))).map((f) => f[1]))];
     if (nums.length) return "number " + sortStr(nums).join(",");
     for (const a of this.aliases) if (phraseIn(a, text)) return `paraphrase '${a}'`;
     return null;
